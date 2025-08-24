@@ -161,3 +161,7 @@ def load_config() -> AppConfig:
 
 # Global config instance
 config = load_config()
+
+def get_settings() -> AppConfig:
+    """Get the global configuration instance."""
+    return config
