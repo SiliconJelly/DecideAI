@@ -1,0 +1,24 @@
+{
+  "enabled": true,
+  "name": "🔒 Security Audit Hook",
+  "description": "Runs comprehensive security scans and compliance checks whenever authentication or data handling code changes to maintain commercial-grade security standards for the OCR platform.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "backend/app/auth/**/*.py",
+      "backend/app/models/**/*.py",
+      "backend/app/api/**/*.py",
+      "backend/app/core/security.py",
+      "desktop-app/src-tauri/src/auth/**/*.rs",
+      "desktop-app/src-tauri/src/storage/**/*.rs",
+      "frontend/src/services/auth*.ts",
+      "frontend/src/services/api*.ts",
+      "ai_employee_decision_system/core/security.py"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are a cybersecurity specialist for the Kiro Smart OCR commercial platform. Security-related code has been modified. You must:\n\n1. **Authentication Security**:\n   - Validate JWT implementation and token security\n   - Check password hashing and storage (bcrypt/scrypt)\n   - Verify session management and timeout handling\n   - Test multi-factor authentication if implemented\n   - Validate OAuth integration security\n\n2. **Data Protection**:\n   - Check encryption at rest (database, file storage)\n   - Verify encryption in transit (HTTPS, TLS)\n   - Validate data sanitization and input validation\n   - Test SQL injection prevention\n   - Check for sensitive data exposure in logs\n\n3. **Access Control**:\n   - Validate role-based access control (RBAC)\n   - Test authorization middleware\n   - Check API endpoint security\n   - Verify multi-tenant data isolation\n   - Test privilege escalation prevention\n\n4. **Compliance Validation**:\n   - GDPR compliance for German users\n   - Data privacy requirements for Japanese users\n   - Enterprise security standards\n   - Document processing confidentiality\n\n5. **Security Test Commands to Execute**:\n```bash\n# Static security analysis\nbandit -r backend/app/ -f json -o security_report.json\n\n# Dependency vulnerability scan\nsafety check --json\n\n# Authentication testing\npython scripts/test_auth_security.py\n\n# Data encryption validation\npython scripts/test_encryption.py\n```\n\n6. **Security Checklist**:\n- No hardcoded secrets or API keys\n- Proper password hashing (bcrypt with salt)\n- JWT tokens properly signed and validated\n- HTTPS enforced in production\n- Database connections encrypted\n- Input validation on all endpoints\n- SQL injection prevention\n- XSS protection implemented\n- Multi-tenant data isolation\n- Audit logging for security events\n\n7. **Vulnerability Severity Levels**:\n- **Critical**: Immediate security risk, blocks deployment\n- **High**: Significant risk, requires fix before release\n- **Medium**: Moderate risk, should be addressed soon\n- **Low**: Minor risk, can be addressed in future updates\n\nThis is a commercial product handling sensitive business documents. Security breaches could destroy customer trust and business viability. Never compromise on security."
+  }
+}

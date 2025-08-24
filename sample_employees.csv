@@ -1,0 +1,11 @@
+first_name,last_name,email,position,department
+Hans,Müller,hans.mueller@uni-berlin.de,Professor für Informatik,Informatik
+Yuki,Tanaka,yuki.tanaka@tokyo-tech.ac.jp,准教授,コンピュータサイエンス
+Anna,Schmidt,anna.schmidt@techfirma.de,Senior Entwicklerin,Software Engineering
+Hiroshi,Yamamoto,hiroshi.yamamoto@sme-tokyo.co.jp,プロジェクトマネージャー,開発部
+Maria,Weber,maria.weber@uni-munich.de,Forschungsassistentin,Künstliche Intelligenz
+Sakura,Sato,sakura.sato@kyoto-uni.ac.jp,研究員,機械学習
+Klaus,Fischer,klaus.fischer@mittelstand.de,Personalleiter,Human Resources
+Akiko,Watanabe,akiko.watanabe@osaka-sme.co.jp,人事スペシャリスト,人事部
+Thomas,Bauer,thomas.bauer@startup-berlin.de,CTO,Technology
+Kenji,Nakamura,kenji.nakamura@innovation-lab.jp,シニアエンジニア,R&D

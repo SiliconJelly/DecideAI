@@ -1,0 +1,51 @@
+{
+  "english_queries": [
+    "Who are our employees?",
+    "Who has Python programming skills?",
+    "Suggest a team for a machine learning project",
+    "Who works in the Engineering department?",
+    "Who is best suited for a web development project?",
+    "List all professors in our university",
+    "Who has experience with databases?",
+    "Suggest someone for a leadership role"
+  ],
+  "german_queries": [
+    "Wer sind unsere Mitarbeiter?",
+    "Welche Professoren haben KI-Expertise?",
+    "Wer arbeitet in der Informatik-Abteilung?",
+    "Schlagen Sie ein Team für Machine Learning vor",
+    "Welche Mitarbeiter haben Python-Kenntnisse?",
+    "Wer ist für ein Forschungsprojekt geeignet?",
+    "Welche Wissenschaftler arbeiten an Deep Learning?",
+    "Wer kann ein Digitalisierungsprojekt leiten?"
+  ],
+  "japanese_queries": [
+    "私たちの従業員は誰ですか？",
+    "機械学習の経験がある従業員は誰ですか？",
+    "Pythonプロジェクトに最適な人は誰ですか？",
+    "Web開発チームを提案してください",
+    "データサイエンスの専門知識を持つ人は誰ですか？",
+    "プロジェクトマネージャーに適した人は誰ですか？",
+    "AI研究に携わっている従業員は誰ですか？",
+    "新しいプロダクト開発チームを編成してください"
+  ],
+  "cultural_context_queries": {
+    "german_university": [
+      "Welche Professoren können bei der Betreuung von Doktoranden helfen?",
+      "Wer hat Erfahrung mit EU-Forschungsförderung?",
+      "Welche Mitarbeiter sind für interdisziplinäre Projekte geeignet?"
+    ],
+    "japanese_sme": [
+      "チームリーダーシップに適した経験豊富な従業員は誰ですか？",
+      "新入社員のメンターに適した先輩は誰ですか？",
+      "クライアント対応に適した従業員は誰ですか？"
+    ]
+  },
+  "technical_queries": [
+    "Who has experience with Docker and Kubernetes?",
+    "Suggest developers for a React frontend project",
+    "Who can help with database optimization?",
+    "List employees with cloud computing experience",
+    "Who has machine learning and AI expertise?"
+  ]
+}

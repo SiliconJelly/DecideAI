@@ -1,0 +1,11 @@
+first_name,last_name,email,position,department,skills,hire_date
+Hans,Müller,hans.mueller@tu-berlin.de,Professor für Informatik,Informatik,"Python,Machine Learning,Deep Learning",2018-03-15
+Anna,Schmidt,anna.schmidt@tu-berlin.de,Wissenschaftliche Mitarbeiterin,Informatik,"Java,Software Engineering,Databases",2020-09-01
+Klaus,Weber,klaus.weber@tu-berlin.de,Professor für Mathematik,Mathematik,"Statistics,R,Mathematical Modeling",2015-01-10
+Maria,Fischer,maria.fischer@tu-berlin.de,Postdoc,KI-Forschung,"Neural Networks,TensorFlow,Research",2021-06-15
+Thomas,Bauer,thomas.bauer@tu-berlin.de,Laborleiter,Robotik,"Robotics,C++,Hardware",2017-11-20
+Petra,Hoffmann,petra.hoffmann@tu-berlin.de,Professorin für Physik,Physik,"Quantum Computing,Physics,MATLAB",2016-08-05
+Michael,Richter,michael.richter@tu-berlin.de,Doktorand,Informatik,"Web Development,JavaScript,React",2022-10-01
+Sabine,Klein,sabine.klein@tu-berlin.de,Verwaltungsangestellte,Administration,"Project Management,Office,German",2019-04-12
+Wolfgang,Schneider,wolfgang.schneider@tu-berlin.de,Techniker,IT-Support,"Network Administration,Linux,Security",2020-02-28
+Ingrid,Braun,ingrid.braun@tu-berlin.de,Bibliothekarin,Bibliothek,"Information Science,Cataloging,Research",2014-07-18

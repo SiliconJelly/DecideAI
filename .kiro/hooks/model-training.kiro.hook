@@ -1,0 +1,21 @@
+{
+  "enabled": true,
+  "name": "🧠 Model Training Hook",
+  "description": "Automatically retrains and validates OCR/LLM models when new training data is added, ensuring continuous model improvement without manual intervention for the multilingual OCR system.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "testing/datasets/german/**/*",
+      "testing/datasets/japanese/**/*",
+      "testing/datasets/english/**/*",
+      "testing/datasets/handwriting/**/*",
+      "ai-engine/models/**/*",
+      "training_data/**/*"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are an AI model training specialist for the Kiro Smart OCR system. New training data has been added. You must:\n\n1. **Data Validation**:\n   - Verify data format and quality\n   - Check for proper language labeling\n   - Validate ground truth annotations\n   - Ensure balanced dataset distribution\n\n2. **Model Training Pipeline**:\n   - Retrain OCR models with new data\n   - Fine-tune LLM models for document structure extraction\n   - Update language detection models\n   - Validate handwriting recognition improvements\n\n3. **Training Process**:\n   - Use incremental training to preserve existing knowledge\n   - Monitor training metrics (loss, accuracy, convergence)\n   - Implement early stopping to prevent overfitting\n   - Generate model performance reports\n\n4. **Training Commands to Execute**:\n```bash\n# Validate new training data\npython scripts/validate_training_data.py --path testing/datasets/\n\n# Retrain OCR models\npython ai-engine/ocr/train_ocr_model.py --incremental --languages de,ja,en\n\n# Fine-tune LLM for document structure\npython ai-engine/llm/fine_tune_llm.py --task document_structure --languages de,ja,en\n\n# Update handwriting recognition\npython ai-engine/ocr/train_handwriting_model.py --incremental\n\n# Validate model performance\npython scripts/validate_model_performance.py --compare-baseline\n```\n\n5. **Quality Gates**:\n   - German OCR accuracy: >99%\n   - Japanese OCR accuracy: >99%\n   - English OCR accuracy: >99%\n   - Handwriting accuracy: >95%\n   - Processing speed: <15 seconds per document\n   - Model size: <2GB for desktop deployment\n\n6. **Deployment Actions**:\n   - If training successful: Update model artifacts\n   - If performance improved: Tag new model version\n   - If issues found: Rollback and investigate\n   - Always backup previous model version\n\nModel quality directly impacts customer satisfaction and commercial success. Never compromise accuracy for speed."
+  }
+}

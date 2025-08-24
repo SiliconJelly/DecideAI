@@ -1,0 +1,212 @@
+# Production Docker Compose for AI Employee Decision System
+version: '3.8'
+
+services:
+  # Main application
+  app:
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      - EMPLOYEE_SYSTEM_DB_URL=postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/employee_system
+      - EMPLOYEE_SYSTEM_SECRET_KEY=${SECRET_KEY}
+      - EMPLOYEE_SYSTEM_DEBUG=false
+      - EMPLOYEE_SYSTEM_DATA_DIR=/app/data
+      - EMPLOYEE_SYSTEM_UPLOAD_DIR=/app/data/uploads
+      - EMPLOYEE_SYSTEM_JWT_EXPIRE_MINUTES=60
+    volumes:
+      - app_data:/app/data
+      - ./logs:/app/logs
+    depends_on:
+      - db
+      - redis
+    restart: unless-stopped
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    command: ["gunicorn", "ai_employee_decision_system.api.app:app", "-w", "4", "-k", "uvicorn.workers.UvicornWorker", "--bind", "0.0.0.0:8000"]
+
+  # Web UI service
+  ui:
+    build: .
+    ports:
+      - "7860:7860"
+    environment:
+      - EMPLOYEE_SYSTEM_DB_URL=postgresql://postgres:${POSTGRES_PASSWORD}@db:5432/employee_system
+      - EMPLOYEE_SYSTEM_SECRET_KEY=${SECRET_KEY}
+      - EMPLOYEE_SYSTEM_API_URL=http://app:8000
+    volumes:
+      - app_data:/app/data
+      - ./logs:/app/logs
+    depends_on:
+      - app
+      - db
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+    command: ["python", "-m", "ai_employee_decision_system", "ui", "--host", "0.0.0.0"]
+
+  # PostgreSQL database with backup
+  db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=employee_system
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backups:/backups
+      - ./scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '1.0'
+          memory: 1G
+        reservations:
+          cpus: '0.5'
+          memory: 512M
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Redis with persistence
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+    command: redis-server --appendonly yes --maxmemory 200mb --maxmemory-policy allkeys-lru
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Nginx reverse proxy with SSL
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.prod.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+      - ./logs/nginx:/var/log/nginx
+    depends_on:
+      - app
+      - ui
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.1'
+          memory: 128M
+
+  # Database backup service
+  db-backup:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=employee_system
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - PGPASSWORD=${POSTGRES_PASSWORD}
+    volumes:
+      - ./backups:/backups
+      - ./scripts/backup.sh:/backup.sh
+    depends_on:
+      - db
+    restart: unless-stopped
+    command: >
+      sh -c "
+        chmod +x /backup.sh &&
+        while true; do
+          /backup.sh
+          sleep 86400
+        done
+      "
+
+  # Log aggregation
+  fluentd:
+    image: fluent/fluentd:v1.16-1
+    volumes:
+      - ./logs:/fluentd/log
+      - ./fluentd.conf:/fluentd/etc/fluent.conf
+    ports:
+      - "24224:24224"
+    restart: unless-stopped
+    profiles:
+      - logging
+
+  # Monitoring
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus_data:/prometheus
+    restart: unless-stopped
+    profiles:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD}
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/datasources:/etc/grafana/provisioning/datasources
+    depends_on:
+      - prometheus
+    restart: unless-stopped
+    profiles:
+      - monitoring
+
+volumes:
+  postgres_data:
+  redis_data:
+  app_data:
+  prometheus_data:
+  grafana_data:
+
+networks:
+  default:
+    name: employee_system_prod_network

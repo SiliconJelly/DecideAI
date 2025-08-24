@@ -1,0 +1,20 @@
+{
+  "app": {
+    "title": "AI Employee Decision System",
+    "description": "A system for making data-driven organizational decisions about employees using AI and CV analysis."
+  },
+  "ui": {
+    "query_placeholder": "Ask a question about your employees...",
+    "query_label": "Query",
+    "response_label": "Response",
+    "submit_button": "Submit",
+    "clear_button": "Clear",
+    "loading": "Processing your request..."
+  },
+  "errors": {
+    "general": "An error occurred. Please try again.",
+    "not_found": "Resource not found.",
+    "unauthorized": "You are not authorized to perform this action.",
+    "validation": "Please check your input and try again."
+  }
+}

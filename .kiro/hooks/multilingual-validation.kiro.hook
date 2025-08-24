@@ -1,0 +1,22 @@
+{
+  "enabled": true,
+  "name": "🌍 Multilingual Validation Hook",
+  "description": "Validates all German, Japanese, and English translations and UI layouts whenever frontend components are modified to ensure consistent multilingual user experience for the commercial OCR platform.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "frontend/src/components/**/*.tsx",
+      "frontend/src/components/**/*.jsx",
+      "frontend/src/pages/**/*.tsx",
+      "frontend/src/pages/**/*.jsx",
+      "frontend/src/locales/**/*.json",
+      "frontend/src/**/*.ts",
+      "frontend/src/**/*.js"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "You are a multilingual UX specialist for the Kiro Smart OCR system. Frontend code has been modified. You must:\n\n1. **Translation Validation**:\n   - Check all German translations in `frontend/src/locales/de.json`\n   - Check all Japanese translations in `frontend/src/locales/ja.json`\n   - Check all English translations in `frontend/src/locales/en.json`\n   - Verify no missing translation keys\n   - Validate cultural appropriateness of translations\n\n2. **UI Layout Testing**:\n   - Test German UI (longer text, formal tone)\n   - Test Japanese UI (vertical text support, honorific language)\n   - Test English UI (baseline reference)\n   - Check responsive design across all languages\n   - Validate text overflow and truncation handling\n\n3. **Cultural Context Validation**:\n   - German: Formal business language (Sie), proper umlaut handling\n   - Japanese: Polite forms (です/ます), proper character rendering\n   - English: Professional but approachable tone\n\n4. **Test Commands to Execute**:\n```bash\n# Install dependencies and build\ncd frontend && npm install\n\n# Run translation validation\nnpm run validate-translations\n\n# Run multilingual UI tests\nnpm run test:i18n\n\n# Build and test all language versions\nnpm run build:de && npm run build:ja && npm run build:en\n```\n\n5. **Validation Checklist**:\n- All translation keys present in de.json, ja.json, en.json\n- No hardcoded strings in components\n- German text fits in UI components (typically 30% longer)\n- Japanese characters render correctly (Hiragana, Katakana, Kanji)\n- Cultural tone appropriate for each language\n- Date/time formats correct for each locale\n- Currency formats correct (EUR for German, JPY for Japanese)\n\nThis is a commercial product targeting German and Japanese markets - cultural sensitivity and proper localization are critical for success."
+  }
+}

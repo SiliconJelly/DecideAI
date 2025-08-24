@@ -1,0 +1,11 @@
+first_name,last_name,email,position,department,skills,hire_date
+Hiroshi,Tanaka,hiroshi.tanaka@techsme-tokyo.co.jp,シニアエンジニア,開発部,"Python,Django,PostgreSQL",2019-04-01
+Yuki,Yamamoto,yuki.yamamoto@techsme-tokyo.co.jp,プロジェクトマネージャー,開発部,"Project Management,Agile,Scrum",2018-07-15
+Sakura,Sato,sakura.sato@techsme-tokyo.co.jp,データサイエンティスト,AI研究部,"Machine Learning,Python,Statistics",2020-10-01
+Kenji,Watanabe,kenji.watanabe@techsme-tokyo.co.jp,フロントエンドエンジニア,開発部,"React,JavaScript,CSS",2021-03-20
+Akiko,Nakamura,akiko.nakamura@techsme-tokyo.co.jp,人事スペシャリスト,人事部,"HR Management,Recruitment,Japanese",2017-09-10
+Takeshi,Suzuki,takeshi.suzuki@techsme-tokyo.co.jp,システム管理者,IT部,"Linux,Docker,Kubernetes",2019-12-05
+Mayumi,Ito,mayumi.ito@techsme-tokyo.co.jp,UXデザイナー,デザイン部,"UI/UX Design,Figma,User Research",2020-06-18
+Daisuke,Kobayashi,daisuke.kobayashi@techsme-tokyo.co.jp,品質保証エンジニア,QA部,"Testing,Automation,Selenium",2021-08-30
+Emiko,Hayashi,emiko.hayashi@techsme-tokyo.co.jp,営業マネージャー,営業部,"Sales,Business Development,Japanese",2016-11-12
+Ryouta,Matsumoto,ryouta.matsumoto@techsme-tokyo.co.jp,DevOpsエンジニア,インフラ部,"AWS,CI/CD,Monitoring",2022-01-25

@@ -1,0 +1,20 @@
+{
+  "app": {
+    "title": "AI従業員意思決定システム",
+    "description": "AIと履歴書分析を使用して、従業員に関するデータ駆動型の組織的意思決定を行うシステム。"
+  },
+  "ui": {
+    "query_placeholder": "従業員について質問してください...",
+    "query_label": "クエリ",
+    "response_label": "応答",
+    "submit_button": "送信",
+    "clear_button": "クリア",
+    "loading": "リクエストを処理しています..."
+  },
+  "errors": {
+    "general": "エラーが発生しました。もう一度お試しください。",
+    "not_found": "リソースが見つかりません。",
+    "unauthorized": "このアクションを実行する権限がありません。",
+    "validation": "入力を確認して、もう一度お試しください。"
+  }
+}

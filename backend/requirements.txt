@@ -1,0 +1,50 @@
+# Kiro Smart OCR Backend Requirements
+
+# Core dependencies
+fastapi==0.103.1
+uvicorn==0.23.2
+pydantic==2.4.2
+python-multipart==0.0.6
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+email-validator==2.0.0.post2
+
+# Database
+sqlalchemy==2.0.21
+alembic==1.12.0
+psycopg2-binary==2.9.7
+redis==4.6.0
+
+# OCR and AI
+pytesseract==0.3.10
+pdf2image==1.16.3
+pillow==10.0.1
+numpy==1.26.0
+torch==2.0.1
+transformers==4.33.2
+sentencepiece==0.1.99
+protobuf==4.24.3
+onnxruntime==1.15.1
+
+# Multilingual support
+langdetect==1.0.9
+mecab-python3==1.0.6  # For Japanese text processing
+spacy==3.6.1
+spacy-transformers==1.2.5
+
+# Monitoring and logging
+prometheus-fastapi-instrumentator==6.1.0
+structlog==23.1.0
+python-json-logger==2.0.7
+
+# Testing
+pytest==7.4.2
+pytest-asyncio==0.21.1
+httpx==0.25.0
+pytest-cov==4.1.0
+
+# Development
+black==23.9.1
+isort==5.12.0
+flake8==6.1.0
+mypy==1.5.1

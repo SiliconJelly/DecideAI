@@ -1,0 +1,20 @@
+{
+  "app": {
+    "title": "KI-Mitarbeiterentscheidungssystem",
+    "description": "Ein System zur datengestützten organisatorischen Entscheidungsfindung über Mitarbeiter mithilfe von KI und Lebenslaufanalyse."
+  },
+  "ui": {
+    "query_placeholder": "Stellen Sie eine Frage zu Ihren Mitarbeitern...",
+    "query_label": "Anfrage",
+    "response_label": "Antwort",
+    "submit_button": "Absenden",
+    "clear_button": "Löschen",
+    "loading": "Ihre Anfrage wird bearbeitet..."
+  },
+  "errors": {
+    "general": "Ein Fehler ist aufgetreten. Bitte versuchen Sie es erneut.",
+    "not_found": "Ressource nicht gefunden.",
+    "unauthorized": "Sie sind nicht berechtigt, diese Aktion auszuführen.",
+    "validation": "Bitte überprüfen Sie Ihre Eingabe und versuchen Sie es erneut."
+  }
+}
