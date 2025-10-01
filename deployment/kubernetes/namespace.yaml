@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: kiro-smart-ocr
-  labels:
-    name: kiro-smart-ocr
-    environment: production

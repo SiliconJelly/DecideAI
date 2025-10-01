@@ -17,6 +17,8 @@ config/secrets/
 *.sqlite
 *.sqlite3
 data/employee_system.db
+# Ignore all tenant workspace data (documents, indexes, etc.)
+data/workspaces/
 db/
 
 # AI Models and Large Files

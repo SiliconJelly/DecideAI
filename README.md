@@ -1,68 +1,66 @@
-# DecideAI - HR Helper System
+# DecideAI
 
-## AI-Powered HR Decision Support for German & Japanese Institutions
+General-purpose multilingual AI backend for HR tasks powered by open models (Ollama) with optional offline operation and Retrieval-Augmented Generation (RAG).
 
-DecideAI is an advanced AI-powered HR decision support system specifically designed for German and Japanese institutions including universities and small-to-medium enterprises (SMEs). The system combines multilingual AI capabilities with local processing to provide intelligent HR management and employee decision support with cultural awareness and local compliance.
+## Overview
+
+DecideAI provides a secure, local-first FastAPI backend that integrates with Ollama (or HuggingFace) for LLM inference, supports multilingual prompting (English, German, Japanese), and includes a FAISS-backed RAG pipeline for knowledge-grounded answers. It is privacy-centric and suitable for SMEs and institutions that require on-prem or offline capability.
 
 ### Key Features
 
-- **Multilingual HR Support**: Native German and Japanese language support with cultural awareness
-- **University & SME Focused**: Tailored for academic institutions and small-medium enterprises
-- **AI-Powered Employee Decisions**: Natural language queries for HR decision support
-- **Local AI Processing**: Uses Ollama for completely offline AI inference
-- **Privacy-First Design**: Complete offline operation with local data processing
-- **Compliance Ready**: GDPR compliant for German institutions, privacy-focused for Japanese organizations
+- Multilingual (en, de, ja) prompts and responses
+- Local/offline LLM inference via Ollama with HuggingFace fallback
+- RAG with FAISS vector store and simple retrieval service
+- FastAPI backend with authentication (JWT) and role support
+- Ingestion and indexing helpers for text/PDF/DOCX/CSV (basic)
+- Simple, production-lean repository layout and infra docker-compose
 
-### Project Structure
+### Directory Structure
 
 ```
 DecideAI/
-├── 🌐 frontend/                 # React web application
-├── 🔧 backend/                  # FastAPI backend
-├── 🧠 ai_employee_decision_system/  # Core HR AI system
-│   ├── ai/                     # AI processing modules
-│   ├── api/                    # API endpoints
-│   ├── auth/                   # Authentication system
-│   ├── models/                 # Data models (Employee, Skills, etc.)
-│   ├── services/               # Business logic & AI services
-│   ├── locales/                # German, Japanese, English translations
-│   └── ui/                     # User interface components
-
-├── 🐳 deployment/              # Docker, K8s deployment
-├── 📊 monitoring/              # System monitoring
-└── 🧪 testing/                # Test suites and data
+├── ai_employee_decision_system/      # Main Python package
+│   ├── api/                          # FastAPI app (endpoints)
+│   ├── auth/                         # Auth models/services
+│   ├── core/                         # Config & logging
+│   ├── models/                       # SQLAlchemy models
+│   └── services/                     # LLM, RAG, vectorstores, etc.
+├── infra/                            # docker-compose.yml
+├── scripts/                          # Dev utilities (init_db, index docs, tests)
+├── docs/                             # Documentation
+├── data/                             # Local data (ignored): db, workspaces/*
+├── requirements.txt
+├── pyproject.toml
+└── README.md
 ```
 
-## 🚀 Quick Start (No Technical Knowledge Required!)
+## Quick Start
 
-### Option 1: One-Click Deployment (Recommended)
+### 1) Install dependencies
 ```bash
-# Download and run the automated deployment script
-python DEPLOY_DECIDEAI.py
+pip3 install -r requirements.txt
 ```
-This script will:
-- ✅ Install all dependencies automatically
-- ✅ Set up the AI engine (Ollama)
-- ✅ Initialize the database
-- ✅ Download required AI models
-- ✅ Start the system
 
-### Option 2: Simple Startup (If Already Deployed)
+### 2) Initialize database schema (optional admin)
 ```bash
-# Start the system
-python START_DECIDEAI.py
+python3 scripts/init_db.py
+# or create admin non-interactively
+DECIDEAI_ADMIN_USERNAME=admin DECIDEAI_ADMIN_PASSWORD='StrongPassword!' \
+python3 scripts/init_db.py
 ```
 
-### Option 3: Docker Deployment (For IT Departments)
+### 3) Index sample documents (for RAG)
 ```bash
-# Production deployment with Docker
-docker-compose up -d
-
-# Initialize AI models (first time only)
-docker-compose --profile init up model-init
+python3 scripts/index_documents.py
 ```
 
-## 📋 System Requirements
+### 4) Start API server
+```bash
+uvicorn ai_employee_decision_system.api.app:app --reload
+# API docs: http://localhost:8000/docs
+```
+
+## System Requirements
 
 ### Minimum Requirements:
 - **OS**: Windows 10+, macOS 10.15+, or Linux
@@ -76,19 +74,11 @@ docker-compose --profile init up model-init
 - ✅ Required AI models for German/Japanese support
 - ✅ Web interface and API
 
-## 🎯 After Installation
+## After Installation
 
-### Access Your System:
-- **Web Interface**: http://localhost:7860
-- **API Documentation**: http://localhost:8000/docs
-- **Default Login**: admin / AdminPassword123!
-
-### First Steps:
-1. **Upload Sample Data**: Use `sample_employees.csv`
-2. **Try Multilingual Queries**:
-   - English: "Who are our employees?"
-   - German: "Welche Professoren haben KI-Expertise?"
-   - Japanese: "機械学習の経験がある従業員は誰ですか？"
+- API Docs: http://localhost:8000/docs
+- Create a user via /auth/register or by using scripts/init_db.py with env variables
+- Try multilingual queries via /ai/query (en, de, ja)
 
 ### Target Institutions
 
@@ -102,22 +92,22 @@ docker-compose --profile init up model-init
 - **SMEs**: Japanese small-medium enterprises, technology companies
 - **Cultural Awareness**: Japanese business etiquette, hierarchical structures
 
-## 🛠️ Tech Stack
+## Tech Stack
 
-**Backend:** Python FastAPI, SQLAlchemy, SQLite/PostgreSQL, Pydantic  
-**AI/ML:** Ollama, Llama2 7B Chat, Local LLM inference  
-**Frontend:** React, Next.js, Gradio, TypeScript  
-**Auth:** JWT tokens, Bcrypt, Role-based access  
-**Deployment:** Docker, Kubernetes, GitHub Actions  
-**Testing:** pytest, Tox, Pre-commit hooks  
+Backend: FastAPI, SQLAlchemy (SQLite by default), Pydantic
+LLM: Ollama (offline) or HuggingFace fallback
+RAG: FAISS vector store, sentence-transformers embeddings
+Auth: JWT, bcrypt
+Infra: docker-compose (optional), GitHub Actions (optional)
+Testing: pytest
 
-## 🚀 Micro SaaS Ready
+## Features
 
-DecideAI is designed as a micro SaaS solution for:
-- **Self-hosted deployments** for privacy-conscious organizations
-- **Cloud SaaS offerings** with multi-tenant architecture
-- **White-label solutions** for HR consultancies
-- **Enterprise on-premise** installations
+- Multilingual HR-focused prompts and responses (en/de/ja)
+- Offline/edge deployment with Ollama
+- RAG for grounded responses
+- Basic ingestion and indexing helpers
+- Secure auth and role-based access
 
 ## 📈 Business Model
 
