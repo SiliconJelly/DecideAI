@@ -1,0 +1,16 @@
+# DecideAI base configuration
+
+vector_store:
+  backend: faiss           # options: faiss, qdrant
+  index_dir: data/workspaces/sample-tenant/index
+
+embedding:
+  model_name: intfloat/multilingual-e5-small
+
+ingestion:
+  input_dir: data/workspaces/sample-tenant/raw
+  supported_extensions: [".pdf", ".docx", ".txt", ".md"]
+
+chunking:
+  size: 800        # approximate characters per chunk
+  overlap: 120     # overlap between chunks (characters)

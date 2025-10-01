@@ -1,0 +1,10 @@
+# DecideAI development overrides
+
+vector_store:
+  index_dir: data/workspaces/dev-tenant/index
+
+embedding:
+  model_name: intfloat/multilingual-e5-base
+
+ingestion:
+  input_dir: data/workspaces/dev-tenant/raw

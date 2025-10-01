@@ -430,15 +430,66 @@ def process_query(
     current_user: User = Depends(get_current_user),
     ai_service: AIService = Depends(get_ai_service),
 ):
-    """Process a natural language query."""
+    """Process a natural language query with optional RAG support.
+    
+    Request body:
+    - query (str): The natural language query
+    - context (dict, optional): Additional context
+    - use_rag (bool, optional): Whether to use retrieval-augmented generation (default: True)
+    - top_k (int, optional): Number of documents to retrieve for RAG (default: 5)
+    """
     query = request.get("query", "")
     context = request.get("context")
+    use_rag = request.get("use_rag", True)
+    top_k = request.get("top_k", 5)
     
     if not query:
         raise HTTPException(status_code=400, detail="Query is required")
     
-    result = ai_service.process_query(query, context)
+    result = ai_service.process_query(query, context=context, use_rag=use_rag, top_k=top_k)
     return result
+
+
+@app.post("/ai/search", tags=["AI"])
+def search_knowledge_base(
+    request: Dict[str, Any],
+    current_user: User = Depends(get_current_user),
+    ai_service: AIService = Depends(get_ai_service),
+):
+    """Search the knowledge base using vector similarity.
+    
+    Request body:
+    - query (str): The search query
+    - top_k (int, optional): Number of results to return (default: 10)
+    
+    Returns:
+    - List of matching documents with scores and metadata
+    """
+    query = request.get("query", "")
+    top_k = request.get("top_k", 10)
+    
+    if not query:
+        raise HTTPException(status_code=400, detail="Query is required")
+    
+    if not ai_service.retrieval_service:
+        raise HTTPException(
+            status_code=503,
+            detail="Retrieval service is not available. Please check FAISS configuration."
+        )
+    
+    try:
+        results = ai_service.retrieval_service.search(query, top_k=top_k)
+        return {
+            "query": query,
+            "results": results,
+            "count": len(results)
+        }
+    except Exception as e:
+        logger.error(f"Search failed: {e}")
+        raise HTTPException(
+            status_code=500,
+            detail=f"Search failed: {str(e)}"
+        )
 
 
 # Project endpoints

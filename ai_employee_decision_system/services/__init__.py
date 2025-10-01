@@ -7,6 +7,7 @@ from .document_service import DocumentService
 from .employee_service import EmployeeService
 from .llm_service import OllamaLLMService, HuggingFaceLLMService
 from .project_service import ProjectService
+from .retrieval_service import RetrievalService
 from .skill_service import SkillService
 from .specialization_service import SpecializationService
 from .tag_service import TagService
@@ -18,6 +19,7 @@ __all__ = [
     "OllamaLLMService",
     "HuggingFaceLLMService",
     "ProjectService",
+    "RetrievalService",
     "SkillService",
     "SpecializationService",
     "TagService",
